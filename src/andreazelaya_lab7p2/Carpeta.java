@@ -11,6 +11,7 @@ public class Carpeta {
     public Carpeta(String nombre, String link) {
         this.nombre = nombre;
         this.link = link;
+        archivos.add(new Archivo());
     }
 
     public String getNombre() {
@@ -47,7 +48,7 @@ public class Carpeta {
 
     @Override
     public String toString() {
-        return "Carpeta{" + "nombre=" + nombre + ", link=" + link + ", archivos=" + archivos + ", carpetas=" + carpetas + '}';
+        return nombre + " ";
     }
     
     

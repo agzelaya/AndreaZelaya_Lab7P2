@@ -2,6 +2,9 @@ package andreazelaya_lab7p2;
 
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.DefaultListModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -40,14 +43,20 @@ public class googleUndead extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jt_nombreCarpeta = new javax.swing.JTextField();
         jb_agregarCarpeta = new javax.swing.JButton();
+        jp_carpetas = new javax.swing.JPopupMenu();
+        jmi_addArchivo = new javax.swing.JMenuItem();
+        jmi_addCarpeta = new javax.swing.JMenuItem();
+        jmi_descargarCarpeta = new javax.swing.JMenuItem();
+        jp_archivos = new javax.swing.JPopupMenu();
+        jmi_descargarArchivos = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jProgressBar1 = new javax.swing.JProgressBar();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        arbol = new javax.swing.JTree();
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -166,11 +175,24 @@ public class googleUndead extends javax.swing.JFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jmi_addArchivo.setText("Agregar archivo");
+        jp_carpetas.add(jmi_addArchivo);
+
+        jmi_addCarpeta.setText("Agregar carpeta");
+        jp_carpetas.add(jmi_addCarpeta);
+
+        jmi_descargarCarpeta.setText("Descargar");
+        jp_carpetas.add(jmi_descargarCarpeta);
+
+        jmi_descargarArchivos.setText("Descargar");
+        jp_archivos.add(jmi_descargarArchivos);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-
-        jScrollPane1.setViewportView(jTree1);
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 424, 24));
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Mi Unidad", "Destacados", "Papelera" };
@@ -178,7 +200,14 @@ public class googleUndead extends javax.swing.JFrame {
             public String getElementAt(int i) { return strings[i]; }
         });
         jList1.setToolTipText("");
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jList1);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 140, 245));
 
         jButton1.setText("Agregar Archivo");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +215,7 @@ public class googleUndead extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, -1, -1));
 
         jButton2.setText("Agregar Carpeta");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -193,54 +223,20 @@ public class googleUndead extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 380, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(108, 108, 108))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(157, 157, 157)
-                .addComponent(jButton1)
-                .addGap(79, 79, 79)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE))
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(44, Short.MAX_VALUE))
-        );
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Home");
+        arbol.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        arbol.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                arbolMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(arbol);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 370, 250));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -271,8 +267,12 @@ public class googleUndead extends javax.swing.JFrame {
             if (!repeats) {
                 Archivo a = new Archivo(nombre, link, extension, size);
                 listArchivos.add(a);
-                System.out.println(listArchivos);
+                general.add(a);
+                DefaultTreeModel modelo = (DefaultTreeModel) arbol.getModel();
+                DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo.getRoot();
+                refreshArbol(root, listArchivos, listCarpetas);
                 done = true;
+
             }
         } while (!done);
 
@@ -283,7 +283,7 @@ public class googleUndead extends javax.swing.JFrame {
     private void jb_agregarCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_agregarCarpetaActionPerformed
         String nombre = jt_nombreCarpeta.getText();
         String link = "dive.google.com/" + linkCarpeta();
-        
+
         boolean done = false;
         do {
 
@@ -298,10 +298,14 @@ public class googleUndead extends javax.swing.JFrame {
             if (!repeats) {
                 Carpeta c = new Carpeta(nombre, link);
                 listCarpetas.add(c);
+                general.add(c);
+                DefaultTreeModel modelo = (DefaultTreeModel) arbol.getModel();
+                DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo.getRoot();
+                refreshArbol(root, listArchivos, listCarpetas);
                 done = true;
             }
         } while (!done);
-        
+
         jt_nombreCarpeta.setText("");
     }//GEN-LAST:event_jb_agregarCarpetaActionPerformed
 
@@ -311,6 +315,35 @@ public class googleUndead extends javax.swing.JFrame {
         agregarCarpeta.setLocationRelativeTo(this);
         agregarCarpeta.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void arbolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_arbolMouseClicked
+
+        if (evt.getButton() == 3) {
+            int pos = arbol.getClosestRowForLocation(evt.getX(), evt.getY());
+            arbol.setSelectionRow(pos);
+            Object obj = arbol.getSelectionPath().getLastPathComponent();
+            nodo = (DefaultMutableTreeNode) obj;
+            if (nodo.getUserObject() instanceof Archivo) {
+                thisArchivo = (Archivo) nodo.getUserObject();
+                jp_archivos.show(arbol, evt.getX(), evt.getY());
+            } else if (nodo.getUserObject() instanceof Carpeta) {
+                thisCarpeta = (Carpeta) nodo.getUserObject();
+                jp_carpetas.show(arbol, evt.getX(), evt.getY());
+            } else {
+
+            }
+        }
+    }//GEN-LAST:event_arbolMouseClicked
+
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+        if (jList1.getSelectedValue().equals("Mi Unidad")) {
+            DefaultTreeModel modeloTree = (DefaultTreeModel) arbol.getModel();
+            DefaultMutableTreeNode root = (DefaultMutableTreeNode) modeloTree.getRoot();
+            refreshArbol(root, listArchivos, listCarpetas);
+        } else {
+            cleanArbol();
+        }
+    }//GEN-LAST:event_jList1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -396,9 +429,60 @@ public class googleUndead extends javax.swing.JFrame {
         return link;
     }
 
+    public void refreshArbolMU(Object object, DefaultMutableTreeNode nodo) {
+
+        DefaultTreeModel modelo = (DefaultTreeModel) arbol.getModel();
+
+        try {
+            for (Object obj : general) {
+                if (obj instanceof Archivo) {
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(((Archivo) obj).getNombre());
+                    nodo.add(n);
+                } else if (obj instanceof Carpeta) {
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(((Carpeta) obj).getNombre());
+                    nodo.add(n);
+                    refreshArbolMU(obj, n);
+                }
+
+            }
+        } catch (StackOverflowError e) {
+
+        }
+    }
+
+    public void refreshArbol(DefaultMutableTreeNode root, ArrayList<Archivo> archivos, ArrayList<Carpeta> carpetas) {
+        for (Archivo a : archivos) {
+            DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(a);
+            root.add(nodo);
+        }
+        for (Carpeta c : carpetas) {
+            {
+                DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
+
+                if (!c.getArchivos().isEmpty()) {
+                    for (int i = 0; i < c.getArchivos().size(); i++) {
+                        DefaultMutableTreeNode nodo2 = new DefaultMutableTreeNode(c.getArchivos().get(i));
+                        nodo.add(nodo2);
+                    }
+                }
+                root.add(nodo);
+            }
+        }
+
+    }
+
+    public void cleanArbol() {
+        DefaultTreeModel modeloTree = (DefaultTreeModel) arbol.getModel();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) modeloTree.getRoot();
+        root.removeAllChildren();
+        
+        modeloTree.reload();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog agregarArchivo;
     private javax.swing.JDialog agregarCarpeta;
+    private javax.swing.JTree arbol;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -412,10 +496,15 @@ public class googleUndead extends javax.swing.JFrame {
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTree jTree1;
     private javax.swing.JButton jb_agregarArchivo;
     private javax.swing.JButton jb_agregarCarpeta;
     private javax.swing.JComboBox<String> jc_extension;
+    private javax.swing.JMenuItem jmi_addArchivo;
+    private javax.swing.JMenuItem jmi_addCarpeta;
+    private javax.swing.JMenuItem jmi_descargarArchivos;
+    private javax.swing.JMenuItem jmi_descargarCarpeta;
+    private javax.swing.JPopupMenu jp_archivos;
+    private javax.swing.JPopupMenu jp_carpetas;
     private javax.swing.JTextField jt_nombreArchivo;
     private javax.swing.JTextField jt_nombreCarpeta;
     private javax.swing.JTextField jt_size;
@@ -423,5 +512,9 @@ public class googleUndead extends javax.swing.JFrame {
 
     ArrayList<Archivo> listArchivos = new ArrayList();
     ArrayList<Carpeta> listCarpetas = new ArrayList();
+    ArrayList general = new ArrayList();
+    Carpeta thisCarpeta;
+    Archivo thisArchivo;
+    DefaultMutableTreeNode nodo;
     Random random = new Random();
 }

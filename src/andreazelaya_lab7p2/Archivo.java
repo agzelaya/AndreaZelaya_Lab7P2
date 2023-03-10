@@ -13,6 +13,10 @@ public class Archivo {
         this.size = size;
     }
 
+    public Archivo() {
+    }
+    
+    
     
 
     public String getNombre() {
@@ -49,7 +53,7 @@ public class Archivo {
 
     @Override
     public String toString() {
-        return "Archivo{" + "nombre=" + nombre + ", link=" + link + ", extension=" + extension + ", size=" + size + '}';
+        return nombre;
     }
 
     
