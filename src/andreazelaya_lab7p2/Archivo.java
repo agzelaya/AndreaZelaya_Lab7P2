@@ -1,6 +1,8 @@
 package andreazelaya_lab7p2;
 
-public class Archivo {
+import java.io.Serializable;
+
+public class Archivo implements Serializable{
     private String nombre;
     private String link;
     private String extension;
