@@ -32,7 +32,6 @@ public class progressBar extends Thread{
     
     
     public void run(){
-        System.out.println("running");
         int count = 0;
         while(barra.getValue() != barra.getMaximum()){
             barra.setValue(barra.getValue()+1);
@@ -41,8 +40,8 @@ public class progressBar extends Thread{
                 Thread.sleep(1000);
             } catch (Exception e) {
             }
-            count++;
         }
         barra.setValue(0);
+        
     }
 }

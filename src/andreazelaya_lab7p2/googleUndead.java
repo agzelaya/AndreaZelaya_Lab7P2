@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -57,6 +58,8 @@ public class googleUndead extends javax.swing.JFrame {
         jmi_descargarCarpeta = new javax.swing.JMenuItem();
         jp_archivos = new javax.swing.JPopupMenu();
         jmi_descargarArchivos = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         agregarArchivo1 = new javax.swing.JDialog();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -71,6 +74,10 @@ public class googleUndead extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jt_nombreCarpeta1 = new javax.swing.JTextField();
         jb_agregarCarpeta1 = new javax.swing.JButton();
+        tableDescargas = new javax.swing.JDialog();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabla = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jprogressbar = new javax.swing.JProgressBar();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -224,6 +231,12 @@ public class googleUndead extends javax.swing.JFrame {
         });
         jp_archivos.add(jmi_descargarArchivos);
 
+        jMenuItem1.setText("Destacar");
+        jp_archivos.add(jMenuItem1);
+
+        jMenuItem2.setText("Eliminar");
+        jp_archivos.add(jMenuItem2);
+
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel5.setForeground(new java.awt.Color(51, 51, 51));
@@ -339,6 +352,57 @@ public class googleUndead extends javax.swing.JFrame {
         agregarCarpeta1Layout.setVerticalGroup(
             agregarCarpeta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel6.setBackground(new java.awt.Color(204, 204, 204));
+
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Nombe", "Tamaño", "Extencion"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tabla);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(55, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout tableDescargasLayout = new javax.swing.GroupLayout(tableDescargas.getContentPane());
+        tableDescargas.getContentPane().setLayout(tableDescargasLayout);
+        tableDescargasLayout.setHorizontalGroup(
+            tableDescargasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        tableDescargasLayout.setVerticalGroup(
+            tableDescargasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -529,9 +593,22 @@ public class googleUndead extends javax.swing.JFrame {
     }//GEN-LAST:event_jList1MouseClicked
 
     private void jmi_descargarArchivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_descargarArchivosActionPerformed
-        
         progressBar pb = new progressBar(jprogressbar,thisArchivo.getSize());
         pb.start();
+        listDownloads.add(thisArchivo);
+        
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        model.setRowCount(0);
+        for (int i = 0; i < listDownloads.size(); i++) {
+            Object[] data = {listDownloads.get(i).getNombre(), listDownloads.get(i).getSize(), listDownloads.get(i).getExtension()};
+            model.addRow(data);
+        }
+        
+        tableDescargas.setModal(true);
+        tableDescargas.pack();
+        tableDescargas.setVisible(true);
+        
+        
         
     }//GEN-LAST:event_jmi_descargarArchivosActionPerformed
 
@@ -545,7 +622,7 @@ public class googleUndead extends javax.swing.JFrame {
     private void jb_agregarArchivo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_agregarArchivo1ActionPerformed
         String nombre = jt_nombreArchivo1.getText();
         String extension = String.valueOf(jc_extension1.getSelectedItem());
-        String link = "dive.google.com/" + linkArchivo();
+        String link = "dive.google.com/" + thisCarpeta.getLink().substring(15) + "/" +linkArchivo();
         double size = Integer.parseInt(jt_size1.getText());
         boolean done = false;
         do {
@@ -742,13 +819,17 @@ public class googleUndead extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JList<String> jList1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jb_agregarArchivo;
     private javax.swing.JButton jb_agregarArchivo1;
     private javax.swing.JButton jb_agregarCarpeta;
@@ -768,10 +849,13 @@ public class googleUndead extends javax.swing.JFrame {
     private javax.swing.JTextField jt_nombreCarpeta1;
     private javax.swing.JTextField jt_size;
     private javax.swing.JTextField jt_size1;
+    private javax.swing.JTable tabla;
+    private javax.swing.JDialog tableDescargas;
     // End of variables declaration//GEN-END:variables
 
     ArrayList<Archivo> listArchivos = new ArrayList();
     ArrayList<Carpeta> listCarpetas = new ArrayList();
+    ArrayList<Archivo> listDownloads = new ArrayList();
     ArrayList general = new ArrayList();
     Carpeta thisCarpeta;
     Archivo thisArchivo;
