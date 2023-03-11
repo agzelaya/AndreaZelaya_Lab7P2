@@ -5,11 +5,11 @@ import javax.swing.JProgressBar;
 public class progressBar extends Thread{
     private JProgressBar barra;
     private double mB;
-    boolean isAlive;
 
     public progressBar(JProgressBar barra, double mB) {
         this.barra = barra;
         this.mB = mB;
+        barra.setMaximum((int)mB/10);
     }
 
     public JProgressBar getBarra() {
@@ -28,21 +28,21 @@ public class progressBar extends Thread{
         this.mB = mB;
     }
 
-    public boolean isIsAlive() {
-        return isAlive;
-    }
-
-    public void setIsAlive(boolean isAlive) {
-        this.isAlive = isAlive;
-    }
     
     
     
     public void run(){
-        while(isAlive){
-            barra.setValue(barra.getValue()+100);
+        System.out.println("running");
+        int count = 0;
+        while(barra.getValue() != barra.getMaximum()){
+            barra.setValue(barra.getValue()+1);
             
-            
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+            }
+            count++;
         }
+        barra.setValue(0);
     }
 }

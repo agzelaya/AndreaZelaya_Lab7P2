@@ -347,6 +347,7 @@ public class googleUndead extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jprogressbar.setString("");
         jprogressbar.setStringPainted(true);
         jPanel1.add(jprogressbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 424, 24));
 
@@ -528,7 +529,10 @@ public class googleUndead extends javax.swing.JFrame {
     }//GEN-LAST:event_jList1MouseClicked
 
     private void jmi_descargarArchivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_descargarArchivosActionPerformed
-
+        
+        progressBar pb = new progressBar(jprogressbar,thisArchivo.getSize());
+        pb.start();
+        
     }//GEN-LAST:event_jmi_descargarArchivosActionPerformed
 
     private void jmi_addArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_addArchivoActionPerformed
@@ -569,10 +573,11 @@ public class googleUndead extends javax.swing.JFrame {
 
         jt_nombreArchivo1.setText("");
         jt_size1.setText("");
+        agregarArchivo1.dispose();
     }//GEN-LAST:event_jb_agregarArchivo1ActionPerformed
 
     private void jb_agregarCarpeta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_agregarCarpeta1ActionPerformed
-        String nombre = jt_nombreCarpeta.getText();
+        String nombre = jt_nombreCarpeta1.getText();
         String link = "dive.google.com/" + linkCarpeta();
 
         boolean done = false;
@@ -597,8 +602,8 @@ public class googleUndead extends javax.swing.JFrame {
             }
         } while (!done);
 
-        jt_nombreCarpeta.setText("");
-        agregarCarpeta.dispose();
+        jt_nombreCarpeta1.setText("");
+        agregarCarpeta1.dispose();
     }//GEN-LAST:event_jb_agregarCarpeta1ActionPerformed
 
     private void jmi_addCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_addCarpetaActionPerformed
